@@ -130,7 +130,7 @@ public class ChatFrame extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        appendToChat("        Hello! I am your Tour Guide. I will be guided you through your Scenic Safari! If you want to exit type \"Bye\".", false);
+        appendToChat("        Hello! I am your Tour Guide. I will be guiding you through your Scenic Safari! If you want to exit type \"Bye\".", false);
 
     }
 
