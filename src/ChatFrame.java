@@ -7,17 +7,23 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class ChatFrame extends JFrame {
-    private JTextPane chatPane;
-    private JTextField inputField;
+    private static JTextPane chatPane;
+    private static JTextField inputField;
     private JButton submitButton;
     private Timer cursorTimer;
 
     private Color backgroundColor = new Color(40, 40, 40);
     private Color chatAreaColor = new Color(43, 43, 43);
     private Color textColor = new Color(253, 250, 236);
-    private Color userPromptColor = new Color(255, 251, 240);
-    private Color robotResponseColor = new Color(206, 102, 206);
+    private static Color userPromptColor = new Color(255, 251, 240);
+    private static Color robotResponseColor = new Color(206, 102, 206);
     private Font textFont = new Font("Montserrat", Font.PLAIN, 14);
+
+    public static boolean wrongCheck = false;
+    public static boolean activelyGettingInfo = false;
+
+    public static String globalUserInput = "";
+
 
     public ChatFrame(String title) {
         super(title);
@@ -152,18 +158,53 @@ public class ChatFrame extends JFrame {
             }
             if (!"Type here...".equals(userInput)) {
                 appendToChat("     " + userInput, true);
-
-                //CHATBOT LOGIC
-
                 String botResponse = Main.respondTo(userInput);
-                appendToChat("        " + botResponse, false);
+                //CHATBOT LOGIC
+                if (wrongCheck && userInput.toLowerCase().equals("wrong info")){
+                    botResponse = "I am sorry I got the information wrong, please correct me based on your information. Type 'Characteristic: [Your Information]' (ex: Biome: Aquatic) to correct me. \nList of Characteristics you can change: Name, Biome, Lifespan, Color, Region Found, Weight.\n Type it exactly like that and specify only a numerical value when necessary.";
+                    activelyGettingInfo = true;
+                }
+                if (activelyGettingInfo){
+                    globalUserInput = userInput.toLowerCase();
+//                    if (userInput.toLowerCase().contains("name:")){
+//                        Animal.setName(userInput.substring(6));
+//                        botResponse = "Thank you for the correction. The name has been updated to " + userInput.substring(6);
+//                        activelyGettingInfo = false;
+//                    }
+//                    else if (userInput.toLowerCase().contains("biome:")){
+//                        Animal.setBiome(userInput.substring(7));
+//                        botResponse = "Thank you for the correction. The biome has been updated to " + userInput.substring(7);
+//                        activelyGettingInfo = false;
+//                    }
+//                    else if (userInput.toLowerCase().contains("lifespan:")){
+//                        Animal.setLifespan(Integer.parseInt(userInput.substring(9)));
+//                        botResponse = "Thank you for the correction. The lifespan has been updated to " + userInput.substring(9);
+//                        activelyGettingInfo = false;
+//                    }
+//                    else if (userInput.toLowerCase().contains("color:")){
+//                        Animal.setColor(userInput.substring(6));
+//                        botResponse = "Thank you for the correction. The color has been updated to " + userInput.substring(6);
+//                        activelyGettingInfo = false;
+//                    }
+//                    else if (userInput.toLowerCase().contains("region found:")){
+//                        Animal.setRegionFound(userInput.substring(13));
+//                        botResponse = "Thank you for the correction. The region found has been updated to " + userInput.substring(13);
+//                        activelyGettingInfo = false;
+//                    }
+//                    else if (userInput.toLowerCase().contains("weight:")){
+//                        Animal.setWeight(Double.parseDouble(userInput.substring(7)));
+//                        botResponse = "Thank you for the correction. The weight has been updated to " + userInput.substring(7);
+//                        activelyGettingInfo = false;
+//                    }
+                }
 
+                appendToChat("        " + botResponse, false);
                 inputField.setText("");
             }
         }
     }
 
-    private void appendToChat(String message, boolean isUser) {
+    public static void appendToChat(String message, boolean isUser) {
         StyledDocument styledDoc = chatPane.getStyledDocument();
 
 
@@ -176,7 +217,7 @@ public class ChatFrame extends JFrame {
     }
 
 
-    private void displayToChat() {
+    private static void displayToChat() {
         Timer timer = new Timer(50, new ActionListener() {
             private int currentIndex = inputField.getText().length();
 
@@ -194,7 +235,7 @@ public class ChatFrame extends JFrame {
         timer.start();
     }
 
-    private void addStyledText(StyledDocument doc, String text, Color color) {
+    private static void addStyledText(StyledDocument doc, String text, Color color) {
         SimpleAttributeSet set = new SimpleAttributeSet();
         StyleConstants.setForeground(set, color);
         StyleConstants.setBold(set, true);
@@ -214,11 +255,11 @@ public class ChatFrame extends JFrame {
         });
     }
 
-/*
+
     private void setWindowIcon() {
         try {
 
-            BufferedImage iconImage = ImageIO.read(getClass().getResource("/Logos/WellBotLogo.png"));
+            BufferedImage iconImage = ImageIO.read(getClass().getResource("/Logos/submitButton.png"));
 
 
             setIconImage(iconImage);
@@ -226,7 +267,7 @@ public class ChatFrame extends JFrame {
             e.printStackTrace();
         }
     }
-*/
+
 }
 
 

@@ -12,11 +12,11 @@ public class Main {
         });
 
         Scanner scanner = new Scanner(System.in);
-        DisplayFrame displayFrame = new DisplayFrame();
-
+        AnimalSafariGame g = new AnimalSafariGame();
     }
 
     public static String respondTo(String userInput) {
-        return "I am a chatbot!";
+        return "Hello! I am your Tour Guide. Please follow the instructions in our main Safari window.";
     }
+
 }
