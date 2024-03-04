@@ -29,7 +29,7 @@ public class ChatFrame extends JFrame {
         super(title);
 
 
-//        setWindowIcon();
+        setWindowIcon();
 
 
         setLayout(new BorderLayout());
@@ -46,7 +46,6 @@ public class ChatFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane(chatPane);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
-        // input field made
         inputField = new JTextField("Type here...");
         inputField.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(5, 5, 5, 5),
@@ -59,12 +58,10 @@ public class ChatFrame extends JFrame {
         inputField.setForeground(new Color(169, 169, 169));
         inputField.setFont(textFont);
 
-        // Grey line above text box
         JPanel linePanel = new JPanel();
         linePanel.setBackground(Color.GRAY);
         linePanel.setPreferredSize(new Dimension(400, 2));
 
-        // Clear the placeholder text
         inputField.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -109,7 +106,6 @@ public class ChatFrame extends JFrame {
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(inputPanel, BorderLayout.SOUTH);
 
-        // animation for carrot typing
         cursorTimer = new Timer(500, new ActionListener() {
             private boolean cursorVisible = true;
 
@@ -130,13 +126,12 @@ public class ChatFrame extends JFrame {
             }
         });
 
-        // Set frame properties to exit on close and width/size
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 600);
         setLocationRelativeTo(null);
         setVisible(true);
 
-        appendToChat("        Hello! I am your Tour Guide. I will be guiding you through your Scenic Safari! If you want to exit type \"Bye\".", false);
+        appendToChat("        Hello! I am your Tour Guide. I will be guiding you through your Scenic Safari! If you want to exit type \"Bye\". Where do you want to visit first?", false);
 
     }
 
@@ -160,12 +155,18 @@ public class ChatFrame extends JFrame {
                 appendToChat("     " + userInput, true);
                 String botResponse = Main.respondTo(userInput);
                 //CHATBOT LOGIC
-                if (wrongCheck && userInput.toLowerCase().equals("wrong info")){
-                    botResponse = "I am sorry I got the information wrong, please correct me based on your information. Type 'Characteristic: [Your Information]' (ex: Biome: Aquatic) to correct me. \nList of Characteristics you can change: Name, Biome, Lifespan, Color, Region Found, Weight.\n Type it exactly like that and specify only a numerical value when necessary.";
+                if (wrongCheck && userInput.toLowerCase().equals("change region")){
+                    botResponse = "I am sorry I got the information wrong, please correct me based on your information. Type 'Region: [Your Information]' (ex: Region: North America) to correct me.";
                     activelyGettingInfo = true;
                 }
                 if (activelyGettingInfo){
                     globalUserInput = userInput.toLowerCase();
+                    if(userInput.toLowerCase().indexOf("region:") != -1){
+                        botResponse = "Thank you for the correction. The region found has been updated to " + userInput.substring(7);
+                        AnimalSafariGame.newRegion = userInput.substring(7);
+                        wrongCheck = false;
+                        activelyGettingInfo = false;
+                    }
 //                    if (userInput.toLowerCase().contains("name:")){
 //                        Animal.setName(userInput.substring(6));
 //                        botResponse = "Thank you for the correction. The name has been updated to " + userInput.substring(6);
@@ -212,7 +213,6 @@ public class ChatFrame extends JFrame {
 
         addStyledText(styledDoc, message.substring(isUser ? 5 : 8) + "\n", isUser ? userPromptColor : robotResponseColor);
 
-        // Text Display
         displayToChat();
     }
 

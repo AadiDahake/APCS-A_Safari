@@ -31,12 +31,8 @@ class Animal {
         this.biome = biome;
     }
 
-    public int getLifespan() {
-        return lifespan;
-    }
-
-    public void setLifespan(int lifespan) {
-        this.lifespan = lifespan;
+    public String getLifespan() {
+        return lifespan + " years";
     }
 
     public String getColor() {
@@ -69,5 +65,9 @@ class Animal {
 
     public void move(double speed) {
         ChatFrame.appendToChat("        " + name + " moves at " + speed + " mph", false);
+    }
+
+    public String displayName(Animal animal) {
+        return animal.getName();
     }
 }

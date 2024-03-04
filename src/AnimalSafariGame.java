@@ -21,6 +21,8 @@ public class AnimalSafariGame {
     private JButton hawkButton;
     private JButton houseflyButton;
 
+    public static String newRegion;
+
     public AnimalSafariGame() {
         frame = new JFrame("Scenic Safari");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -189,10 +191,13 @@ public class AnimalSafariGame {
     }
 
     private void displayAnimalInfo(Animal animal) {
+        if(newRegion != null) {
+            animal.setRegionFound(newRegion);
+        }
         StringBuilder animalInfo = new StringBuilder();
-        animalInfo.append("Name: ").append(animal.getName()).append("\n");
+        animalInfo.append("Name: ").append(animal.displayName(animal)).append("\n");
         animalInfo.append("Biome: ").append(animal.getBiome()).append("\n");
-        animalInfo.append("Lifespan (years): ").append(animal.getLifespan()).append("\n");
+        animalInfo.append("Lifespan: ").append(animal.getLifespan()).append("\n");
         animalInfo.append("Color: ").append(animal.getColor()).append("\n");
         animalInfo.append("Region Found: ").append(animal.getRegionFound()).append("\n");
         animalInfo.append("Weight (lb): ").append(animal.getWeight()).append("\n");
@@ -235,12 +240,10 @@ public class AnimalSafariGame {
         }
 
 
-        // Ask the user if they want to make corrections
-        ChatFrame.appendToChat("        " + "Type 'Wrong Info' to initiate a correction to the information presentation. If you do not want to, feel free to move on.", false);
+        ChatFrame.appendToChat("        " + "Type 'Change Region' if you have seen this animal someplace else. If you have not, feel free to move on.", false);
 
         ChatFrame.wrongCheck = true;
 
-        // Return to the main page after showing the animal info
         welcomeLabel.setText("Where do you want to go next?");
         mainPanel.removeAll();
         mainPanel.revalidate();
@@ -250,35 +253,35 @@ public class AnimalSafariGame {
     }
 
     private Water createShark() {
-        return new Water("Shark", "Ocean", 10, "Gray", "Open Ocean", 42390, 2, 3, true);
+        return new Water("Shark", "Ocean", 10, "Gray", "Pacific Ocean", 500, 2, 10, true);
     }
 
     private Water createDolphin() {
-        return new Water("Dolphin", "Ocean", 15, "Gray", "Coastal", 150, 1, 2, true);
+        return new Water("Dolphin", "Ocean", 15, "Gray", "Atlantic, Pacific, and Indian Oceans", 150, 1, 2, true);
     }
 
     private Water createSeaTurtle() {
-        return new Water("Sea Turtle", "Ocean", 80, "Green", "Coastal", 500, 4, 10, false);
+        return new Water("Sea Turtle", "Ocean", 80, "Green", "Atlantic and Indian Ocean", 500, 4, 10, false);
     }
 
     private Land createLion() {
-        return new Land("Lion", "Grasslands", 20, "Yellow", "Africa", 420, 4, 3.5);
+        return new Land("Lion", "Grasslands", 20, "Yellow", "Africa", 420, 4, 1);
     }
 
     private Land createTiger() {
-        return new Land("Tiger", "Grasslands", 15, "Orange", "Asia", 300, 4, 3);
+        return new Land("Tiger", "Grasslands", 15, "Orange", "Asia", 300, 4, 1);
     }
 
     private Land createElephant() {
-        return new Land("Elephant", "Grasslands", 60, "Gray", "Africa", 12000, 4, 2.5);
+        return new Land("Elephant", "Grasslands", 60, "Gray", "Africa", 12000, 4, 0.1);
     }
 
     private Air createEagle() {
-        return new Air("Eagle", "Sky", 30, "Brown", "Global", 10, true);
+        return new Air("Eagle", "Sky", 30, "Brown", "North America and Europe", 10, true);
     }
 
     private Air createHawk() {
-        return new Air("Hawk", "Sky", 20, "Black", "North America", 2, true);
+        return new Air("Hawk", "Sky", 20, "Brown and Black", "North America", 2, true);
     }
 
     private Air createHousefly() {
@@ -289,4 +292,5 @@ public class AnimalSafariGame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(AnimalSafariGame::new);
     }
+
 }
