@@ -81,6 +81,10 @@ public class AnimalSafariGame {
         mainPanel.revalidate();
         mainPanel.repaint();
 
+        ChatFrame.wrongCheck = false;
+        ChatFrame.activelyGettingInfo = false;
+        ChatFrame.appendToChat("        " + "What animal are you interested in learning about?", false);
+
         JLabel oceanLabel = new JLabel("What animal are you interested in learning about?");
         oceanLabel.setForeground(new Color(0x33CCFF));
         oceanLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,6 +122,11 @@ public class AnimalSafariGame {
         mainPanel.removeAll();
         mainPanel.revalidate();
         mainPanel.repaint();
+
+        ChatFrame.wrongCheck = false;
+        ChatFrame.activelyGettingInfo = false;
+        ChatFrame.appendToChat("        " + "What animal are you interested in learning about?", false);
+
 
         JLabel grasslandsLabel = new JLabel("What animal are you interested in learning about?");
         grasslandsLabel.setForeground(new Color(0x33CCFF));
@@ -157,6 +166,11 @@ public class AnimalSafariGame {
         mainPanel.revalidate();
         mainPanel.repaint();
 
+        ChatFrame.wrongCheck = false;
+        ChatFrame.activelyGettingInfo = false;
+        ChatFrame.appendToChat("        " + "What animal are you interested in learning about?", false);
+
+
         JLabel skyLabel = new JLabel("What animal are you interested in learning about?");
         skyLabel.setForeground(new Color(0x33CCFF));
         skyLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -194,6 +208,7 @@ public class AnimalSafariGame {
         if(newRegion != null) {
             animal.setRegionFound(newRegion);
         }
+        newRegion = null;
         StringBuilder animalInfo = new StringBuilder();
         animalInfo.append("Name: ").append(animal.displayName(animal)).append("\n");
         animalInfo.append("Biome: ").append(animal.getBiome()).append("\n");
